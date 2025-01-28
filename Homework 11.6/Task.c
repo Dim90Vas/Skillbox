@@ -9,9 +9,9 @@
 #define MAX_SIZE 100 //максимальное количество учеников
 #define M 30 //Размер массива
 
-struct student_data { //{"vas","dim","val",'m',7,"matem",5},{"pet","art","ser",'m',7,"matem",4},{"gor","ale","geo",'m',7,"matem",2},{"brt","eka","vik",'w',7,"matem",3},
-    char surname[M];  //{"kar","ele","vas",'w',7,"matem",2},{"mar","lud","igo",'w',7,"matem",3},{"pis","mix","evg",'m',7,"matem",2},{"mis","nat","iva",'w',7,"matem",4},
-    char name[M];     //{"kar","uli","pet",'w',7,"matem",3},{"fro","and","iva",'m',7,"matem",4},{"loz","vyc","vyc",'m',7,"matem",4},{"hra","tat","nik",'w',7,"matem",4},
+struct student_data { 
+    char surname[M];  
+    char name[M];     
     char patronymic[M];
     char gender;
     int training_class;
