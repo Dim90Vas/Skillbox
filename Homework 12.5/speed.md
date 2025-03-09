@@ -1,3 +1,5 @@
-Сравнение скорости работы
-![Снимок экрана 2025-03-09 225957](https://github.com/user-attachments/assets/4e537600-3302-4ba7-87b4-cd500ee761eb)
-![Снимок экрана 2025-03-09 225933](https://github.com/user-attachments/assets/d8c5e2c0-1c13-4f2b-a568-78bf2545ef3e)
+Сравнение скорости работы. Видно что библиотечные функции работают быстрее
+
+
+![Снимок экрана 2025-03-09 225933](https://github.com/user-attachments/assets/6c5e0e62-6143-4623-9949-77893b2969ca)
+![Снимок экрана 2025-03-09 225957](https://github.com/user-attachments/assets/209f5523-3e56-49b7-aee9-fa76a6ae580f)
