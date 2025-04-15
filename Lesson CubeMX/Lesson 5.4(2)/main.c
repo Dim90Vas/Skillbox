@@ -34,21 +34,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   }
 }
 
-
-/*
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-		uint8_t flag_key1_press = 1;
-	  uint32_t time_key1_press = 0;
-		if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET && flag_key1_press) {
-			flag_key1_press = 0;
-			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);//смена состояния кнопки при нажатии
-			time_key1_press = HAL_GetTick();//HAL_GetTick() возвращает текущее время в миллисекундах
-		}
-		if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300) { 
-			flag_key1_press = 1;
-		}
-}
-*/
 void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
