@@ -3,22 +3,28 @@ TIM_HandleTypeDef htim1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
+void usDelay(uint16_t seconds);
 
 int main(void) {
   HAL_Init();
   MX_GPIO_Init();
   MX_TIM1_Init();
-	HAL_TIM_Base_Start_IT(&htim1); 
+  HAL_TIM_Base_Start_IT(&htim1); 
   while (1) {
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
+    usDelay(2000);
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
+    usDelay(4000);
   }
+}
+//Функция пользовательской задержки от таймера 1
+void usDelay(uint16_t seconds) {
+  __HAL_TIM_SET_COUNTER(&htim1, 0);
+  while(__HAL_TIM_GET_COUNTER(&htim1) < seconds);
 }
 
 void TIM1_UP_IRQHandler(void) {
   HAL_TIM_IRQHandler(&htim1);
-}
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
 }
 
 static void MX_TIM1_Init(void) {
@@ -26,7 +32,7 @@ static void MX_TIM1_Init(void) {
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 128;
+  htim1.Init.Prescaler = 512;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
