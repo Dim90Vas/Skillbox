@@ -19,7 +19,7 @@ int main(void) {
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
     
     // Настройка SysTick
-    SysTick_Config(SystemCoreClock / 8000);
+    SysTick_Config(SystemCoreClock / 800);
     
     while (1) {
         HAL_GPIO_TogglePin(LED_PORT, LED_PIN);
