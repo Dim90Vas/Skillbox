@@ -36,7 +36,7 @@ static void MX_SPI1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t txdata = 0x0F;
+uint8_t txdata = 0x99;
 
 /* USER CODE END 0 */
 
@@ -76,9 +76,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     /* USER CODE END WHILE */
 	while(1) {
-		
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 		HAL_SPI_Transmit_DMA(&hspi1, &txdata, sizeof(txdata));
-				
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);		
 		HAL_Delay(1000);
 	}
     /* USER CODE BEGIN 3 */
