@@ -90,7 +90,7 @@ int main(void)
 
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-	 // Проверка флага завершения приёма
+   // Проверка флага завершения приёма
    if (dataReceivedFlag)
    {
       HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
@@ -99,7 +99,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
    
    }
 	 //Перезапуск приёма
-	 HAL_SPI_Receive_IT(&hspi2, &rxData, 1);
+	 HAL_SPI_Receive_IT(&hspi2, &rxData, 2);
 }
 
 /**
@@ -213,11 +213,9 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PB12 */
   GPIO_InitStruct.Pin = GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
