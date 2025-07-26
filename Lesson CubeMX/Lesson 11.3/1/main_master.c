@@ -37,7 +37,7 @@ static void MX_SPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t txdata = 0x99;
-
+volatile uint8_t flag = 1;//флаг завершения передачи
 /* USER CODE END 0 */
 
 /**
@@ -69,22 +69,31 @@ int main(void)
   MX_DMA_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);// управление CS	
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     /* USER CODE END WHILE */
 	while(1) {
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-		HAL_SPI_Transmit_DMA(&hspi1, &txdata, sizeof(txdata));
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);		
-		HAL_Delay(1000);
+    if (flag) {
+        flag = 0;
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+        HAL_SPI_Transmit_DMA(&hspi1, &txdata, sizeof(txdata));
+    }
+    HAL_Delay(1000);
 	}
     /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 }
 
+void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI1) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+        flag = 1;
+    }
+}
 
 /**
   * @brief System Clock Configuration
