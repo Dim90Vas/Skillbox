@@ -7,6 +7,7 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 /* USER CODE BEGIN PV */
 uint8_t tx_data[5] = {0x10, 0x20, 0x30, 0x40, 0x50};  // Master (I2C1) передаёт
 uint8_t rx_data[5];                                   // Slave (I2C2) принимает
+volatile uint8_t dma_flag = 1; //флаг окончания передачи
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -28,18 +29,27 @@ int main(void) {
 		Error_Handler();
   }
  	while (1) {
-     // Master: передаёт по DMA
-     if (HAL_I2C_Master_Transmit_DMA(&hi2c1, 0x1A << 1, tx_data, sizeof(tx_data)) != HAL_OK) {
-        Error_Handler();
-     }
-     HAL_Delay(1000);
-    }
+		 // Master: передаёт по DMA
+		 if (dma_flag) {
+				dma_flag = 0;
+				if (HAL_I2C_Master_Transmit_DMA(&hi2c1, 0x1A << 1, tx_data, sizeof(tx_data)) != HAL_OK) {
+						Error_Handler();
+				}
+		 }
+   HAL_Delay(1000);
+	}
 }
 
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c) {
     if (hi2c->Instance == I2C2) {
         // Повторный запуск приёма
         HAL_I2C_Slave_Receive_IT(&hi2c2, rx_data, sizeof(rx_data));
+    }
+}
+
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+    if (hi2c->Instance == I2C1) {
+        dma_flag = 1;
     }
 }
 
